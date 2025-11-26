@@ -1,103 +1,72 @@
-<h2 align="center"> 🛒 EXZA - Classifieds Marketplace </h2>
+<h2 align="center"> 🛒 EXZA – Modern Marketplace App </h2>
 
 <h4 align="center">
-A responsive, real-time classifieds platform built with React, Redux, Firebase Authentication, and a modern Glassmorphism theme.
+  A clean OLX-style buying & selling platform built with React, Redux, Firebase Auth, and Cloudinary.
 </h4>
 
 <p align="center">
-<img src="https://www.google.com/search?q=https://placehold.co/800x400/9ec8f5/333%3Ftext%3DEXZA%2BApp%2BPreview%2B(Light%2BTheme)" alt="EXZA App Preview" width="80%">
+  <img src="/src/assets/exza-preview.gif" alt="EXZA App Preview" width="80%">
 </p>
 
 <p align="center">
-<a href="#" target="_blank">
-<img src="https://img.shields.io/badge/🔗 Live Preview-000000?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Live Demo Link">
-</a>
+  <a href="https://your-exza-live-link.com" target="_blank">
+    <img src="https://img.shields.io/badge/🔗 Live Preview-000000?style=for-the-badge&logo=google-chrome&logoColor=white">
+  </a>
 </p>
 
-📖 About the Project
+---
 
-EXZA is a modern, OLX-style classifieds application designed for users to quickly buy and sell new or used products within their local area. The platform focuses on a clean user experience backed by robust state management (Redux Toolkit) and secure authentication (Firebase).
+## 📖 About the Project
 
-The application strictly enforces security: users must be signed in to perform any transactional actions, such as listing a product or adding items to the cart.
+**EXZA** is a modern and responsive marketplace application modeled after OLX.  
+Anyone can browse products. Once logged in via **Google Authentication**, users can post new products, upload images, add items to cart, and mark items as sold during checkout.
 
-✨ Features (Phase 6 Complete)
+The project uses **Redux Toolkit** for global state, **Cloudinary** for image uploads, and **LocalStorage persistence** for listings & cart.
 
-Security & Authentication (Requirement A, F.iii)
+---
 
-Google Sign-In: Secure and seamless authentication using the Firebase Google provider.
+## 🛠️ Built With
 
-Session Management: User state and authentication readiness are managed in Redux, ensuring the application reliably tracks the current session.
+This project uses the following technologies:
 
-Protected Routes: Selling, Cart, and Checkout pages are guarded. Unauthenticated users attempting access are redirected to the Login page.
+- **React (Vite)** — frontend framework  
+- **Redux Toolkit** — state management  
+- **React Router DOM** — navigation  
+- **React Hook Form** — form handling  
+- **Firebase Authentication (Google Sign-In)** — secure login  
+- **Cloudinary Upload API** — image hosting  
+- **Tailwind CSS** — styling  
+- **LocalStorage** — persistent data  
 
-Product Management (Requirement B, F.i, G)
+---
 
-Create New Listings: Authenticated users can list new products via a responsive React Hook Form (/sell).
+## ✨ Features
 
-Asynchronous Image Handling: Form includes validation and simulates image upload via a mock Cloudinary API, returning a hosted URL for the product.
+- **Public Product Access**  
+  Anyone can browse the product listings without logging in.
 
-Product State Management: Products are dispatched to the Redux store (productsSlice), where they are managed in real-time (F.i).
+- **Google Authentication**  
+  Secure login using Firebase's Google Sign-In.
 
-Search & Filtering (Ready): Core functionality for listing and browsing products is implemented.
+- **Product Listing System**  
+  Authenticated users can create new listings with one product image.
 
-Transactional Logic (Requirement D, E, F.ii, F.iv)
+- **Cloudinary Upload**  
+  Each product image is securely uploaded and stored in Cloudinary.
 
-Add to Cart: Users can add available products to a temporary Redux-managed cart (F.ii). This action is gated behind authentication.
+- **Add to Cart (Single Item)**  
+  OLX-style cart: each product can be added only once.
 
-Checkout Process: A dedicated checkout flow handles collecting mock payment/shipping information (using RHF validation).
+- **Checkout → Sold Status**  
+  Completing checkout marks the product as *SOLD*, and its button becomes disabled.
 
-Mark as Sold: The successful checkout process dispatches a processCheckout action, which updates the product status from 'available' to 'sold' (E, F.iv) and clears the cart.
+- **LocalStorage Persistence**  
+  Products & cart remain saved even after reload.
 
-Design & Architecture (Phase 4 Complete)
+- **Responsive UI**  
+  Fully optimized for phone, tablet, and desktop.
 
-Custom Theme: Utilizes a custom Tailwind CSS theme based on a modern light purple/blue gradient (exza-gradient) with light mode color variables.
+- **Fallback Image Handling**  
+  If an uploaded image fails to load, a placeholder is shown.
 
-Glassmorphism UI: Header, Footer, and Card components feature a light, frosted glass effect.
-
-Responsive Layout: Optimized for all screen sizes (mobile, tablet, desktop).
-
-🛠️ Built With
-
-This project uses the following core technologies:
-
-React (Vite) — Frontend Framework
-
-Redux Toolkit — State Management (for Auth, Products, and Cart)
-
-React Router DOM — Navigation
-
-Tailwind CSS — Utility-first styling (with custom colors and utilities)
-
-Firebase SDK — Authentication (Google Sign-In)
-
-React Hook Form — Form validation and management
-
-Mock Cloudinary API — Image upload simulation (for demonstrating B)
-
-🚀 Getting Started
-
-To run this project locally:
-
-Clone the repository:
-
-git clone [repository-url]
-cd exza-app
-
-
-Install dependencies:
-
-npm install
-
-
-Setup Firebase:
-
-Create a Firebase project and enable Google Authentication.
-
-Update src/api/auth.js with your specific firebaseConfig.
-
-Start the development server:
-
-npm run dev
-
-
-The application will automatically open in your browser, enabling you to test the full authentication and product workflow.
+---

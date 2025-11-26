@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    background-image: theme('backgroundImage.exza-gradient');
+}
+
+.glass-button {
+    @apply bg-white/50 backdrop-blur-soft shadow-category;
+}
+
+.glass-card {
+    @apply bg-white/40 backdrop-blur-hard shadow-elevated;
+}

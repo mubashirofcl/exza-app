@@ -5,7 +5,7 @@
 </h4>
 
 <p align="center">
-  <img src="/src/assets/exza-preview.gif" alt="EXZA App Preview" width="80%">
+  <img src="/src/assets/preview.png" alt="EXZA App Preview" width="80%">
 </p>
 
 ---

@@ -8,12 +8,6 @@
   <img src="/src/assets/exza-preview.gif" alt="EXZA App Preview" width="80%">
 </p>
 
-<p align="center">
-  <a href="https://your-exza-live-link.com" target="_blank">
-    <img src="https://img.shields.io/badge/🔗 Live Preview-000000?style=for-the-badge&logo=google-chrome&logoColor=white">
-  </a>
-</p>
-
 ---
 
 ## 📖 About the Project

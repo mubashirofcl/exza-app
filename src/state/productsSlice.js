@@ -6,7 +6,7 @@ const loadState = () => {
     if (!raw) return { listings: [], cartItems: [] };
     return JSON.parse(raw);
   } catch (e) {
-    console.error("Failed to load products from localStorage", e);
+    console.error('Failed to load products from localStorage', e);
     return { listings: [], cartItems: [] };
   }
 };
@@ -21,51 +21,68 @@ const productsSlice = createSlice({
   },
   reducers: {
     addProduct: (state, action) => {
-      state.listings.push(action.payload);
-    },
+      const payload = action.payload || {};
+      if (!payload.createdAt) payload.createdAt = new Date().toISOString();
 
+      const existingIndex = state.listings.findIndex((p) => p.id === payload.id);
+      if (existingIndex !== -1) {
+        state.listings.splice(existingIndex, 1);
+        state.listings.unshift(payload);
+        return;
+      }
+
+      state.listings.unshift(payload);
+    },
 
     addToCart: (state, action) => {
       const item = action.payload;
-      const listing = state.listings.find(l => l.id === item.id);
+      if (!item || !item.id) return;
 
+      const listing = state.listings.find((l) => l.id === item.id);
       if (listing && listing.status === 'sold') return;
 
-      const exists = state.cartItems.find(ci => ci.id === item.id);
+      const idx = state.cartItems.findIndex((ci) => ci.id === item.id);
+      const addQty = (n) => {
+        const p = Number(n);
+        return Number.isFinite(p) && p > 0 ? p : 1;
+      };
 
-      if (!exists) {
-        state.cartItems.push({ ...item, quantity: item.quantity ? Number(item.quantity) : 1 });
+      if (idx === -1) {
+        state.cartItems.unshift({ ...item, quantity: addQty(item.quantity) });
       } else {
-        exists.quantity = (Number(exists.quantity) || 0) + (Number(item.quantity) || 1);
+        state.cartItems[idx].quantity =
+          (Number(state.cartItems[idx].quantity) || 0) + addQty(item.quantity);
+        const [moved] = state.cartItems.splice(idx, 1);
+        state.cartItems.unshift(moved);
       }
     },
 
     removeFromCart: (state, action) => {
       const id = action.payload;
-      state.cartItems = state.cartItems.filter(i => i.id !== id);
+      state.cartItems = state.cartItems.filter((i) => i.id !== id);
     },
 
     updateCartQuantity: (state, action) => {
       const { id, quantity } = action.payload;
       const q = Number(quantity) || 0;
       if (q <= 0) {
-        state.cartItems = state.cartItems.filter(i => i.id !== id);
+        state.cartItems = state.cartItems.filter((i) => i.id !== id);
       } else {
-        const item = state.cartItems.find(i => i.id === id);
+        const item = state.cartItems.find((i) => i.id === id);
         if (item) item.quantity = q;
       }
     },
 
     markAsSold: (state, action) => {
       const id = action.payload;
-      const listing = state.listings.find(p => p.id === id);
+      const listing = state.listings.find((p) => p.id === id);
       if (listing) listing.status = 'sold';
-      state.cartItems = state.cartItems.filter(item => item.id !== id);
+      state.cartItems = state.cartItems.filter((item) => item.id !== id);
     },
 
     clearCart: (state) => {
       state.cartItems = [];
-    }
+    },
   },
 });
 
@@ -75,7 +92,7 @@ export const {
   removeFromCart,
   updateCartQuantity,
   markAsSold,
-  clearCart
+  clearCart,
 } = productsSlice.actions;
 
 export default productsSlice.reducer;

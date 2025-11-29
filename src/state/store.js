@@ -1,6 +1,6 @@
-import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "./authSlice";
-import productsReducer from "./productsSlice";
+import { configureStore } from '@reduxjs/toolkit';
+import authReducer from './authSlice';
+import productsReducer from './productsSlice';
 
 export const store = configureStore({
   reducer: {
@@ -12,3 +12,21 @@ export const store = configureStore({
       serializableCheck: false,
     }),
 });
+
+
+store.subscribe(() => {
+  try {
+    const state = store.getState();
+    const toSave = {
+      listings: state.products.listings,
+      cartItems: state.products.cartItems,
+    };
+    localStorage.setItem('exza_products_v1', JSON.stringify(toSave));
+  } catch (e) {
+    console.error('Failed to save products to localStorage', e);
+  }
+
+  
+});
+
+export default store;

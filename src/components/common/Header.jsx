@@ -8,7 +8,6 @@ const Header = () => {
   const { user, loading } = useAuth();
   const avatarSrc = (user && user.photoURL) || "/avatar.png";
 
-  // 🔥 Get cart count
   const cartItems = useSelector((state) => state.products.cartItems);
   const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 

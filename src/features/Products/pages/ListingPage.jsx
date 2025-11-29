@@ -11,6 +11,7 @@ const categories = [
   { name: 'Food & Drink' }, { name: 'Baby Equipment' }, { name: 'Office' }, { name: 'Home' },
 ];
 
+
 const ListingPage = () => {
   const listings = useSelector((s) => s.products.listings || []);
 

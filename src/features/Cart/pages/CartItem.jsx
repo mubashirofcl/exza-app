@@ -1,19 +1,29 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { removeFromCart } from "../../../state/productsSlice";
+import { alertSuccess, alertConfirm } from "../../../utils/alerts";
 
 const CartItem = ({ item }) => {
     const dispatch = useDispatch();
-
     const [imgSrc, setImgSrc] = useState(item.imageUrl || "/placeholder.png");
 
-    const handleRemove = () => {
-        dispatch(removeFromCart(item.id));
+    const handleImgError = () => {
+        if (imgSrc !== "/placeholder.png") setImgSrc("/placeholder.png");
     };
 
-    const handleImgError = () => {
-        if (imgSrc !== "/placeholder.png") {
-            setImgSrc("/placeholder.png");
+    const handleRemove = async () => {
+        try {
+            const result = await alertConfirm(
+                "Remove item?",
+                `Remove "${item.title}" from your cart?`
+            );
+
+            if (result.isConfirmed) {
+                dispatch(removeFromCart(item.id));
+                alertSuccess("Removed", `"${item.title}" removed from cart.`);
+            }
+        } catch (err) {
+            console.error("Remove from cart failed:", err);
         }
     };
 
@@ -30,9 +40,7 @@ const CartItem = ({ item }) => {
                 <h3 className="font-semibold truncate">{item.title}</h3>
 
                 {item.description && (
-                    <h4 className="text-sm text-gray-700 truncate">
-                        {item.description}
-                    </h4>
+                    <h4 className="text-sm text-gray-700 truncate">{item.description}</h4>
                 )}
 
                 <p className="text-sm text-gray-600">

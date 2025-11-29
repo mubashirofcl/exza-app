@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { logoutUser } from "../../api/auth";
 import { useSelector } from "react-redux";
+import { alertConfirm, alertSuccess, alertError } from "../../utils/alerts";
 
 const Header = () => {
   const { user, loading } = useAuth();
@@ -13,9 +14,18 @@ const Header = () => {
 
   const handleLogout = async () => {
     try {
+      const result = await alertConfirm(
+        "Sign Out?",
+        "Are you sure you want to log out?"
+      );
+
+      if (!result.isConfirmed) return;
+
       await logoutUser();
+      alertSuccess("Signed Out", "You have been logged out successfully.");
     } catch (err) {
       console.error("Logout error:", err);
+      alertError("Logout Failed", err?.message || "Unknown error");
     }
   };
 

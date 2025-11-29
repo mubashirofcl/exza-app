@@ -1,5 +1,3 @@
-// src/api/cloudinary.js
-// MOCK API for Cloudinary Image Uploads (B)
 export const uploadImageToCloudinary = async (file) => {
     if (!file) return null;
     console.log(`MOCK: Uploading file: ${file.name}`);

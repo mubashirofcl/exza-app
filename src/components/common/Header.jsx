@@ -1,16 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuthRedux } from "../../hooks/useAuthRedux";
 import { logoutUser } from "../../api/auth";
 import { useSelector } from "react-redux";
 import { alertConfirm, alertSuccess, alertError } from "../../utils/alerts";
 
 const Header = () => {
-  const { user, loading } = useAuth();
+  
+  const { user, loading } = useAuthRedux();
+
   const avatarSrc = (user && user.photoURL) || "/avatar.png";
 
-  const cartItems = useSelector((state) => state.products.cartItems);
-  const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+  const cartItems = useSelector((state) => state.products?.cartItems ?? []);
+  const cartCount = cartItems.reduce((total, item) => total + (Number(item.quantity) || 0), 0);
 
   const handleLogout = async () => {
     try {
@@ -19,7 +21,7 @@ const Header = () => {
         "Are you sure you want to log out?"
       );
 
-      if (!result.isConfirmed) return;
+      if (!result?.isConfirmed) return;
 
       await logoutUser();
       alertSuccess("Signed Out", "You have been logged out successfully.");
@@ -58,11 +60,13 @@ const Header = () => {
               <button onClick={handleLogout} className="text-exza-dark">Sign Out</button>
               <img
                 src={avatarSrc}
-                alt="profile"
+                alt={user?.displayName || "profile"}
                 className="w-8 h-8 rounded-full object-cover"
                 onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src = "/avatar.png";
+                  if (e && e.target) {
+                    e.target.onerror = null;
+                    e.target.src = "/avatar.png";
+                  }
                 }}
               />
             </>

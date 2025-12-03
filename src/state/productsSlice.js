@@ -25,6 +25,7 @@ const productsSlice = createSlice({
       if (!payload.createdAt) payload.createdAt = new Date().toISOString();
 
       const existingIndex = state.listings.findIndex((p) => p.id === payload.id);
+
       if (existingIndex !== -1) {
         state.listings.splice(existingIndex, 1);
         state.listings.unshift(payload);
@@ -39,6 +40,7 @@ const productsSlice = createSlice({
       if (!updated || !updated.id) return;
 
       const idx = state.listings.findIndex((p) => String(p.id) === String(updated.id));
+      
       if (idx !== -1) {
         state.listings[idx] = { ...state.listings[idx], ...updated };
       } else {
@@ -63,9 +65,7 @@ const productsSlice = createSlice({
     deleteProduct(state, action) {
       const id = action.payload;
       if (!id) return;
-      // remove product from listings
       state.listings = state.listings.filter(p => String(p.id) !== String(id));
-      // remove any cart items that reference this product id
       state.cartItems = state.cartItems.filter(ci => String(ci.id) !== String(id));
     },
 
@@ -96,22 +96,9 @@ const productsSlice = createSlice({
       }
     },
 
-
-
     removeFromCart: (state, action) => {
       const id = action.payload;
       state.cartItems = state.cartItems.filter((i) => i.id !== id);
-    },
-
-    updateCartQuantity: (state, action) => {
-      const { id, quantity } = action.payload;
-      const q = Number(quantity) || 0;
-      if (q <= 0) {
-        state.cartItems = state.cartItems.filter((i) => i.id !== id);
-      } else {
-        const item = state.cartItems.find((i) => i.id === id);
-        if (item) item.quantity = q;
-      }
     },
 
     markAsSold: (state, action) => {

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, deleteProduct } from "../../state/productsSlice"; // ensure deleteProduct exists
+import { addToCart, deleteProduct } from "../../state/productsSlice"; 
 import { Link } from "react-router-dom";
 import { alertConfirm, alertSuccess, alertError } from "../../utils/alerts";
+
 
 const ShareIcon = ({ className }) => (
   <svg className={className} width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -38,7 +39,7 @@ const ProductCard = ({ product }) => {
   const handleAdd = () => {
     if (status === "sold" || isInCart) return;
     dispatch(addToCart({ id, title, price, imageUrl }));
-    alertSuccess("Added", `${title} added to cart`);
+    alertSuccess("Added", `${title} added to cart`)
   };
 
   const handleImgError = () => {
@@ -60,7 +61,6 @@ const ProductCard = ({ product }) => {
     }
   };
 
-  // eslint-disable-next-line no-console
   console.log("[ProductCard] id:", id, "ownerId:", ownerId, "currentUserId:", currentUserId);
 
   return (
@@ -89,6 +89,7 @@ const ProductCard = ({ product }) => {
 
         <div className="flex items-center justify-between mt-1">
           <div className="flex gap-3 items-center">
+
             <button
               onClick={handleAdd}
               disabled={status === "sold" || isInCart}
@@ -96,6 +97,8 @@ const ProductCard = ({ product }) => {
             >
               {status === "sold" ? "Sold Out" : isInCart ? "Added in Cart" : "Add to Cart"}
             </button>
+
+
 
             {isOwner && (
               <>

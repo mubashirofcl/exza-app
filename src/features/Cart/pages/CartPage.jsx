@@ -1,18 +1,27 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import CartItem from "./CartItem";
 import OrderSummary from "./OrderSummary";
+import { clearCart } from "../../../state/productsSlice";
+import { Link } from "react-router-dom";
 
 const CartPage = () => {
   const cartItems = useSelector((s) => s.products.cartItems);
 
+  const dispatch = useDispatch();
+
   return (
     <div className="flex flex-col py-10 px-4">
-      <h2 className="text-3xl font-bold text-exza-purple">Your Cart ({cartItems.length})</h2>
+      <h2 className="text-3xl font-bold  text-exza-purple">Your Cart ({cartItems.length})
+        <button className="ms-3 font-medium text-sm  px-2 py-1  relative glass-button rounded-full text-exza-purple" onClick={() => dispatch(clearCart())}>
+          Clear Cart
+        </button>
+      </h2>
+
       {cartItems.length === 0 ? (
         <div className="glass-card my-12 p-12 text-center rounded-2xl max-w-full">Your cart is empty</div>
-      
-        
+
+
       ) : (
         <div className="grid md:grid-cols-3 gap-6 mt-6">
           <div className="md:col-span-2 space-y-4">

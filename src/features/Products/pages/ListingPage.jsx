@@ -35,7 +35,7 @@ const ListingPage = () => {
       <section>
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-semibold text-exza-dark">Recommendations</h2>
-          <Link to="/listings" className="flex items-center space-x-2 text-exza-dark glass-button px-4 py-2 rounded-full hover:bg-white/70 transition duration-300">
+          <Link to="/" className="flex items-center space-x-2 text-exza-dark glass-button px-4 py-2 rounded-full hover:bg-white/70 transition duration-300">
             <span>View More</span>
             <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="9 18 15 12 9 6" /></svg>
           </Link>
